@@ -4,13 +4,15 @@ use PDO;
 
 class Database {
     private static ?PDO $instance = null;
-    public function getConnection():PDO {
+    public static function getConnection():PDO {
         if(self::$instance === null){
+            
             try {
-            $host = Environment::get('DB_HOST');
-            $dbname = Environment::get('DB_NAME');
-            $user = Environment::get('DB_USER');
-            $pass =Environment::get('DB_PASS');
+
+            $host = $_ENV['DB_HOST'];
+            $dbname = $_ENV['DB_NAME'];
+            $user = $_ENV['DB_USER'];
+            $pass =$_ENV['DB_PASS'] ?? '';
             $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
             } catch (PDOException $e) {
