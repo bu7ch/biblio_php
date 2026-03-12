@@ -33,7 +33,7 @@ try {
         // 'edit'   => $controller->edit($id),
         // 'update' => $controller->update($id),
         // 'delete' => $controller->delete($id),
-        // default  => $controller->show($id),
+        default  => $controller->show($id),
     };
 } catch (Throwable $e) {
     http_response_code(404);

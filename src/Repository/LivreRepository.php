@@ -17,7 +17,7 @@ class LivreRepository {
     {
         $stmt = $this->pdo->prepare('SELECT * FROM livres WHERE id = ?');
         $stmt->execute([$id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);  // Ajouter FETCH_ASSOC ici aussi
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);  
         return $row ? $this->hydrate($row) : null;
     }
 

@@ -20,14 +20,26 @@ class LivreController
         $this->render('livres/index', ['livres' => $livres]);
     }
 
-    public function show(int $id): void
+    /**
+     * Affiche les détails d'un livre spécifique
+     * @param int $id L'ID du livre à afficher
+     */
+    public function show(int $id)
     {
+        // 1. Récupérer le livre via le Repository
         $livre = $this->repo->find($id);
+
+        // 2. Gérer le cas où le livre n'existe pas (erreur 404)
         if (!$livre) {
-            throw new \Exception("Livre introuvable");
+            // On peut appeler une méthode dédiée ou une vue d'erreur
+            $this->render('erreurs/404', ['message' => 'Livre non trouvé'], 404);
+            return;
         }
+
+        // 3. Afficher la vue de détail en passant l'objet Livre
         $this->render('livres/show', ['livre' => $livre]);
     }
+
 
     private function render(string $view, array $data = []): void
     {
