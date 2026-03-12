@@ -70,40 +70,40 @@ public function save(Livre $livre): bool
 
     return $result;
 }
-  /**
-     * Met à jour un livre existant.
-     *
-     * @param Livre $livre L'objet Livre à mettre à jour (doit avoir un ID).
-     * @return bool True si la mise à jour a réussi, false sinon.
-     * @throws \InvalidArgumentException Si le livre n'a pas d'ID.
-     */
-    public function update(Livre $livre): bool
-    {
-        if (!$livre->getId()) {
-            throw new \InvalidArgumentException(
-                "Impossible de mettre à jour un livre sans ID."
-            );
-        }
-
-        $query = $this->pdo->prepare("
-            UPDATE livres
-            SET titre = :titre,
-                auteur = :auteur,
-                isbn = :isbn,
-                description = :description,
-                date_publication = :date_publication
-            WHERE id = :id
-        ");
-
-        return $query->execute([
-            ':id'               => $livre->getId(),
-            ':titre'            => $livre->getTitre(),
-            ':auteur'           => $livre->getAuteur(),
-            ':isbn'             => $livre->getIsbn(),
-            ':description'      => $livre->getDescription(),
-            ':date_publication' => $livre->getDatePublication()?->format('Y-m-d')
-        ]);
+/**
+ * Met à jour un livre existant.
+ *
+ * @param Livre $livre L'objet Livre à mettre à jour (doit avoir un ID).
+ * @return bool True si la mise à jour a réussi, false sinon.
+ * @throws \InvalidArgumentException Si le livre n'a pas d'ID.
+ */
+public function update(Livre $livre): bool
+{
+    if (!$livre->getId()) {
+        throw new \InvalidArgumentException(
+            "Impossible de mettre à jour un livre sans ID."
+        );
     }
+
+    $query = $this->pdo->prepare("
+        UPDATE livres
+        SET titre = :titre,
+            auteur = :auteur,
+            isbn = :isbn,
+            description = :description,
+            date_publication = :date_publication
+        WHERE id = :id
+    ");
+
+    return $query->execute([
+        ':id'               => $livre->getId(),
+        ':titre'            => $livre->getTitre(),
+        ':auteur'           => $livre->getAuteur(),
+        ':isbn'             => $livre->getIsbn(),
+        ':description'      => $livre->getDescription(),
+        ':date_publication' => $livre->getDatePublication()?->format('Y-m-d')
+    ]);
+}
 
     private function hydrate(array $data): Livre {
         $livre = new Livre(

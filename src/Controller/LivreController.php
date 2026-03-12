@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Livre;
@@ -226,6 +227,6 @@ class LivreController
         ob_start();
         require_once __DIR__ . '/../View/' . $view . '.php';
         $content = ob_get_clean();
--       require __DIR__ . '/../View/layout.php';
+        require __DIR__ . '/../View/layout.php';
     }
 }
