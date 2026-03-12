@@ -163,7 +163,7 @@ class LivreController
         if (!empty($errors)) {
             $this->render('livres/edit', [
                 'errors' => $errors,
-                'livre'  => $livre, // pour pré-remplir avec les anciennes valeurs
+                'livre'  => $livre,
                 'old'    => $_POST
             ]);
             return;
@@ -188,30 +188,30 @@ class LivreController
         }
     }
 
-    // /**
-    //  * Supprime un livre.
-    //  *
-    //  * @param int $id L'identifiant du livre à supprimer.
-    //  */
-    // public function delete(int $id): void
-    // {
-    //     // Vérifier que le livre existe
-    //     $livre = $this->repo->find($id);
-    //     if (!$livre) {
-    //         $this->render('erreurs/404', ['message' => 'Livre non trouvé'], 404);
-    //         return;
-    //     }
+    /**
+     * Supprime un livre.
+     *
+     * @param int $id L'identifiant du livre à supprimer.
+     */
+    public function delete(int $id): void
+    {
+        // Vérifier que le livre existe
+        $livre = $this->repo->find($id);
+        if (!$livre) {
+            $this->render('erreurs/404', ['message' => 'Livre non trouvé'], 404);
+            return;
+        }
 
-    //     // Effectuer la suppression
-    //     if ($this->repo->delete($id)) {
-    //         header('Location: /livres?deleted=1');
-    //         exit;
-    //     } else {
-    //         // En cas d'erreur, on peut rediriger avec un message d'erreur
-    //         header('Location: /livres?error=1');
-    //         exit;
-    //     }
-    // }
+        // Effectuer la suppression
+        if ($this->repo->delete($id)) {
+            header('Location: /livres?deleted=1');
+            exit;
+        } else {
+            // En cas d'erreur, on peut rediriger avec un message d'erreur
+            header('Location: /livres?error=1');
+            exit;
+        }
+    }
 
     /**
      * Méthode utilitaire pour afficher une vue.

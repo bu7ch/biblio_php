@@ -58,7 +58,7 @@
 
         <div class="actions">
             <a href="/livres" class="btn btn-back">← Retour à la liste</a>
-            <a href="/livres/edit/<?= $livre->getId() ?>" class="btn btn-edit">✏️ Modifier ce livre</a>
+            <a href="/livres/<?= $livre->getId() ?>/edit" class="btn btn-edit">✏️ Modifier ce livre</a>
         </div>
     </div>
 </body>

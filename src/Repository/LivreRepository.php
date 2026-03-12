@@ -104,6 +104,13 @@ public function update(Livre $livre): bool
         ':date_publication' => $livre->getDatePublication()?->format('Y-m-d')
     ]);
 }
+ public function delete(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM livres WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+
+   
 
     private function hydrate(array $data): Livre {
         $livre = new Livre(

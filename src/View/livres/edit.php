@@ -47,7 +47,7 @@
         $dateValue = $old['date_publication'] ?? ($livre->getDatePublication() ? $livre->getDatePublication()->format('Y-m-d') : '');
         ?>
 
-        <form action="/livres/update/<?= (int)$livre->getId() ?>" method="post">
+        <form action="/livres/<?= (int)$livre->getId() ?>/update" method="post">
             <div class="form-group">
                 <label for="titre">Titre *</label>
                 <input type="text" name="titre" id="titre" 

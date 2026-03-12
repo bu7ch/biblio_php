@@ -32,7 +32,7 @@ try {
     match ($action) {
          'edit'   => $controller->edit($id),
          'update' => $controller->update($id),
-        // 'delete' => $controller->delete($id),
+        'delete' => $controller->delete($id),
         default  => $controller->show($id),
     };
 } catch (Throwable $e) {
