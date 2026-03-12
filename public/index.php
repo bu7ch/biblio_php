@@ -21,8 +21,8 @@ try {
 
     if (!$id) {
         match ($segments[1] ?? '') {
-            // 'create' => $controller->create(),
-            // 'store'  => $controller->store(),
+            'create' => $controller->create(),
+            'store'  => $controller->store(),
             default  => $controller->index(),
         };
         return;
@@ -30,10 +30,10 @@ try {
   
 
     match ($action) {
-        // 'edit'   => $controller->edit($id),
-        // 'update' => $controller->update($id),
-        // 'delete' => $controller->delete($id),
-        // default  => $controller->show($id),
+         'edit'   => $controller->edit($id),
+         'update' => $controller->update($id),
+        'delete' => $controller->delete($id),
+        default  => $controller->show($id),
     };
 } catch (Throwable $e) {
     http_response_code(404);
