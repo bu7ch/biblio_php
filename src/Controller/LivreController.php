@@ -1,26 +1,41 @@
 <?php
+declare(strict_types=1);
+
+namespace App\Controller;
 
 use LivreRepository;
 
-class LivreController {
-    private LivreRepository $repository;
 
+class LivreController
+{
+    private LivreRepository $repo;
 
     public function __construct()
     {
-        $this->repository = new LivreRepository();
+        $this->repo = new LivreRepository();
     }
 
-    public function index() {
-        $livres = $this->repository->findAll();
-        $this->render("livres/index", ['livres' => $livres]);
-    
+    public function index(): void
+    {
+        $livres = $this->repo->findAll();
+        $this->render('livre/index', ['livres' => $livres]);
     }
 
-    private function render(string $view, array $data = [], int $statusCode = 200){
-        http_response_code($statusCode);
+    public function show(int $id): void
+    {
+        $livre = $this->repo->find($id);
+        if (!$livre) {
+            throw new \Exception("Livre introuvable");
+        }
+        $this->render('livre/show', ['livre' => $livre]);
+    }
+
+    private function render(string $view, array $data = []): void
+    {
         extract($data);
-        require_once __DIR__ . '/../View' . $view .'.php';
+        ob_start();
+        require __DIR__ . '/../View/' . $view . '.php';
+        $content = ob_get_clean();
+        require __DIR__ . '/../View/layout.php';
     }
-    // TODO: add show() / create()
 }
