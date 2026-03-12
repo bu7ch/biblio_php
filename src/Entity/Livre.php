@@ -1,4 +1,5 @@
 <?php
+namespace App\Entity; 
 
 class Livre {
     private ?int $id=null;

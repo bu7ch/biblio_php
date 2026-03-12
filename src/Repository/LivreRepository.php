@@ -1,7 +1,8 @@
 <?php
+namespace App\Repository;
 
 use App\Model\Database;
-use Livre;
+use App\Entity\Livre;
 use PDO;
 
 class LivreRepository {
@@ -9,22 +10,28 @@ class LivreRepository {
 
     public function __construct()
     {
-        $this->pdo = (new Database())->pdo;    }
+        $this->pdo = (new Database())->pdo;
+    }
 
     public function find(int $id): ?Livre 
     {
         $stmt = $this->pdo->prepare('SELECT * FROM livres WHERE id = ?');
         $stmt->execute([$id]);
-        $row = $stmt->fetch();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);  // Ajouter FETCH_ASSOC ici aussi
         return $row ? $this->hydrate($row) : null;
     }
-    public function findAll():array
+
+    public function findAll(): array
     {
         $stmt = $this->pdo->query('SELECT * FROM livres ORDER BY id DESC');
-        return $stmt->fetchAll(\PDO::FETCH_FUNC, [$this, 'hydrate']);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $livres = [];
+        foreach ($rows as $row) {
+            $livres[] = $this->hydrate($row);
+        }
+        return $livres;
     }
-
-   // TODO:  add save() / update() / delete()
 
     private function hydrate(array $data): Livre {
         $livre = new Livre(
@@ -34,8 +41,7 @@ class LivreRepository {
             $data['description'] ?? null,
             $data['date_publication'] ? new \DateTime($data['date_publication']) : null,
         );
-        $livre->setId($data['id']);
+        $livre->setId((int) $data['id']); 
         return $livre;
     }
-
 }
